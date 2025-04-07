@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeastFinder - Discover Restaurants</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>FeastFinder</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for restaurants or dishes...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="restaurants">Restaurants</a>
+                <a href="#" class="nav-link" data-page="offers">Offers</a>
+                <a href="#" class="nav-link" data-page="orders">My Orders</a>
+            </div>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="mainContent">
+        <!-- Home Page (default) -->
+        <section class="page" id="homePage">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Discover the best food in your city</h1>
+                    <p>Order from your favorite restaurants with just a few clicks</p>
+                    <div class="location-input">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="locationInput" placeholder="Enter your delivery address">
+                        <button id="findFoodBtn">Find Food</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Restaurant Categories -->
+            <section class="categories">
+                <h2>Food Categories</h2>
+                <div class="category-list">
+                    <div class="category-card" data-category="italian">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Pizza">
+                        <h3>Italian</h3>
+                    </div>
+                    <div class="category-card" data-category="american">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Burger">
+                        <h3>American</h3>
+                    </div>
+                    <div class="category-card" data-category="japanese">
+                        <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Sushi">
+                        <h3>Japanese</h3>
+                    </div>
+                    <div class="category-card" data-category="indian">
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Curry">
+                        <h3>Indian</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Restaurant Listing -->
+            <section class="restaurants">
+                <h2>Popular Restaurants Near You</h2>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="fast">Fast Delivery</button>
+                    <button class="filter-btn" data-filter="rating">Rating 4.0+</button>
+                    <button class="filter-btn" data-filter="veg">Pure Veg</button>
+                    <button class="filter-btn" data-filter="offers">Offers</button>
+                </div>
+                <div class="restaurant-list" id="restaurantList">
+                    <!-- Restaurants will be loaded here by JavaScript -->
+                </div>
+            </section>
+        </section>
+
+        <!-- Restaurants Page -->
+        <section class="page" id="restaurantsPage" style="display: none;">
+            <div class="page-header">
+                <h1>All Restaurants</h1>
+                <div class="search-filter">
+                    <input type="text" id="restaurantSearch" placeholder="Search restaurants...">
+                    <select id="cuisineFilter">
+                        <option value="all">All Cuisines</option>
+                        <option value="italian">Italian</option>
+                        <option value="american">American</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="indian">Indian</option>
+                    </select>
+                </div>
+            </div>
+            <div class="restaurant-list-full" id="restaurantListFull">
+                <!-- All restaurants will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Offers Page -->
+        <section class="page" id="offersPage" style="display: none;">
+            <div class="page-header">
+                <h1>Special Offers</h1>
+            </div>
+            <div class="offers-container" id="offersContainer">
+                <div class="offer-card">
+                    <img src="https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Special Offer">
+                    <div class="offer-details">
+                        <h3>50% OFF Your First Order</h3>
+                        <p>Use code FIRST50 at checkout</p>
+                        <p class="valid-date">Valid until 30/12/2023</p>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Special Offer">
+                    <div class="offer-details">
+                        <h3>Free Delivery Weekend</h3>
+                        <p>No minimum order required</p>
+                        <p class="valid-date">Every Friday-Sunday</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Orders Page -->
+        <section class="page" id="ordersPage" style="display: none;">
+            <div class="page-header">
+                <h1>My Orders</h1>
+                <div class="order-filter">
+                    <button class="order-filter-btn active" data-status="all">All</button>
+                    <button class="order-filter-btn" data-status="delivered">Delivered</button>
+                    <button class="order-filter-btn" data-status="processing">Processing</button>
+                    <button class="order-filter-btn" data-status="cancelled">Cancelled</button>
+                </div>
+            </div>
+            <div class="orders-list" id="ordersList">
+                <!-- Orders will be loaded here -->
+                <div class="no-orders">
+                    <i class="fas fa-box-open"></i>
+                    <p>You haven't placed any orders yet</p>
+                    <button class="browse-btn">Browse Restaurants</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded here -->
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Your cart is empty</p>
+                <p>Add items to get started</p>
+            </div>
+        </div>
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span class="subtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee</span>
+                <span class="delivery-fee">$2.99</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span class="total-amount">$2.99</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" disabled>Proceed to Checkout</button>
+        </div>
+    </div>
+    <div class="cart-overlay"></div>
+
+    <!-- Restaurant Modal -->
+    <div class="restaurant-modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <img src="" alt="Restaurant Image" class="modal-restaurant-img">
+                <div class="modal-restaurant-info">
+                    <h2 class="modal-restaurant-name"></h2>
+                    <div class="rating">
+                        <span class="modal-restaurant-rating"></span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="modal-restaurant-cuisine"></p>
+                    <p class="modal-restaurant-delivery"></p>
+                </div>
+            </div>
+            <div class="modal-menu">
+                <div class="menu-categories">
+                    <!-- Categories will be loaded here -->
+                </div>
+                <div class="menu-items">
+                    <!-- Menu items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay"></div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal">
+        <div class="checkout-content">
+            <button class="close-checkout"><i class="fas fa-times"></i></button>
+            <h2>Checkout</h2>
+            <div class="checkout-form">
+                <div class="form-section">
+                    <h3>Delivery Information</h3>
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" placeholder="Enter your full name" required>
+                        <div class="error-message">Please enter your name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <input type="text" id="address" placeholder="Enter your delivery address" required>
+                        <div class="error-message">Please enter your address</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                        <div class="error-message">Please enter a valid phone number</div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Payment Method</h3>
+                    <div class="form-group">
+                        <label for="payment">Payment Method *</label>
+                        <select id="payment" required>
+                            <option value="">Select payment method</option>
+                            <option value="cash">Cash on Delivery</option>
+                            <option value="card">Credit/Debit Card</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                        <div class="error-message">Please select a payment method</div>
+                    </div>
+                    
+                    <div class="form-group" id="cardDetails" style="display: none;">
+                        <label for="cardNumber">Card Number *</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                        <div class="error-message">Please enter a valid card number</div>
+                        
+                        <div class="card-group">
+                            <div>
+                                <label for="expiry">Expiry Date *</label>
+                                <input type="text" id="expiry" placeholder="MM/YY">
+                                <div class="error-message">Please enter expiry date</div>
+                            </div>
+                            <div>
+                                <label for="cvv">CVV *</label>
+                                <input type="text" id="cvv" placeholder="123">
+                                <div class="error-message">Please enter CVV</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkoutItems">
+                        <!-- Order items will be loaded here -->
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span class="checkout-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee</span>
+                        <span class="checkout-delivery">$2.99</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span class="checkout-total">$2.99</span>
+                    </div>
+                </div>
+                
+                <div class="confirm-checkout">
+                    <button class="confirm-order-btn" id="confirmOrderBtn">Confirm Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="checkout-overlay"></div>
+
+    <!-- Order Confirmation -->
+    <div class="confirmation-modal">
+        <div class="confirmation-content">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Your order has been confirmed and will be delivered to you shortly.</p>
+            <p class="order-id">Order ID: <span id="orderId"></span></p>
+            <p class="estimated-time">Estimated Delivery Time: <span id="deliveryTime"></span></p>
+            <button class="continue-shopping">Continue Shopping</button>
+        </div>
+    </div>
+    <div class="confirmation-overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
